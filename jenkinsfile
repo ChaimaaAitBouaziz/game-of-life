@@ -3,15 +3,24 @@ pipeline {
     
     stages{
 
-    stage('Checkout') {
-        steps{
-            checkout scm
-        }
+     stage('Checkout') {
+         steps{
+             checkout scm
+         }
+     }
+     stage('Clean') {
+         steps{
+                 sh "mvn clean"
+         }
+     }
+     stage('Packaging Dev') {
+         when {
+             branch 'develop'
+         }
+         steps{
+             sh "./gradlew package -PbuildNumber=${currentBuild.number} -PgitCommit=${env.GIT_COMMIT[0..6]} "
+             archiveArtifacts artifacts: '/target/*.war', fingerprint: true
+         }
+     }
     }
-    
-
-    stage('Clean') {
-        steps{
-                sh "./gradlew clean --stacktrace"
-        }
-    }
+}
