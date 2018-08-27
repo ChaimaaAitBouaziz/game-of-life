@@ -19,7 +19,7 @@ pipeline {
          }
          steps{
              sh "mvn package -PbuildNumber=${currentBuild.number} -PgitCommit=${env.GIT_COMMIT[0..6]} "
-             archiveArtifacts artifacts: '/target/*.war', fingerprint: true
+             archiveArtifacts artifacts: 'gameoflife-web//target/*.war', fingerprint: true
          }
      }
     }
