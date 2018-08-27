@@ -18,7 +18,7 @@ pipeline {
              branch 'develop'
          }
          steps{
-             sh "./gradlew package -PbuildNumber=${currentBuild.number} -PgitCommit=${env.GIT_COMMIT[0..6]} "
+             sh "mvn package -PbuildNumber=${currentBuild.number} -PgitCommit=${env.GIT_COMMIT[0..6]} "
              archiveArtifacts artifacts: '/target/*.war', fingerprint: true
          }
      }
