@@ -12,6 +12,16 @@ pipeline {
 
     stage('Clean') {
         steps{
-                sh "./gradlew clean --stacktrace"
+                sh "./gradlew clean --package"
         }
+    }
+    stage('Packaging Dev') {
+        when {
+            branch 'develop'
+        }
+        steps{
+            powershell "./gradlew bootRepackage -PbuildNumber=${currentBuild.number} -PgitCommit=${env.GIT_COMMIT[0..6]} "
+            archiveArtifacts artifacts: '**/build/libs/*.war', fingerprint: true
+        }
+    }
     }
