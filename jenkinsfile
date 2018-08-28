@@ -28,7 +28,7 @@ pipeline {
          }
          steps{
              sh "cd /etc/ansible"
-             sh "ansible-playbook -i hosts /etc/ansible/playdep01.yml --private-key /home/ubuntu/.ssh/id_rsa"
+             sh "ansible-playbook -i hosts /etc/ansible/playdep01.yml --private-key ~/.ssh/id_rsa"
          }
      }
      stage('DeployMaster') {
@@ -37,7 +37,7 @@ pipeline {
          }
          steps{
              sh "cd /etc/ansible"
-             sh "ansible-playbook -i hosts /etc/ansible/playdep02.yml --private-key /home/ubuntu/.ssh/id_rsa"
+             sh "ansible-playbook -i hosts /etc/ansible/playdep02.yml --private-key ~/.ssh/id_rsa"
          }
      }
     }
