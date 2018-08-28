@@ -27,6 +27,7 @@ pipeline {
              branch 'develop'
          }
          steps{
+             sh "cd /etc/ansible"
              sh "sudo ansible-playbook -i hosts playdep01.yml --private-key stage.pem"
          }
      }
@@ -35,6 +36,7 @@ pipeline {
              branch 'master'
          }
          steps{
+             sh "cd /etc/ansible"
              sh "sudo ansible-playbook -i hosts playdep02.yml --private-key stage.pem"
          }
      }
