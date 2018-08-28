@@ -28,7 +28,7 @@ pipeline {
          }
          steps{
              sh "cd /etc/ansible"
-             sh "sudo -S ansible-playbook -i hosts playdep01.yml --private-key stage.pem - true"
+             sh "ansible-playbook -i hosts playdep01.yml --private-key stage.pem"
          }
      }
      stage('DeployMaster') {
@@ -37,7 +37,7 @@ pipeline {
          }
          steps{
              sh "cd /etc/ansible"
-             sh "sudo -S ansible-playbook -i hosts playdep02.yml --private-key stage.pem - true"
+             sh "ansible-playbook -i hosts playdep02.yml --private-key stage.pem"
          }
      }
     }
