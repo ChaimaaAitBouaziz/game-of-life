@@ -22,5 +22,21 @@ pipeline {
              archiveArtifacts artifacts: 'gameoflife-web//target/*.war', fingerprint: true
          }
      }
+     stage('DeployDev') {
+         when {
+             branch 'develop'
+         }
+         steps{
+             sh "sudo ansible-playbook -i hosts playdep01.yml --private-key stage.pem"
+         }
+     }
+     stage('DeployMaster') {
+         when {
+             branch 'master'
+         }
+         steps{
+             sh "sudo ansible-playbook -i hosts playdep02.yml --private-key stage.pem"
+         }
+     }
     }
 }
