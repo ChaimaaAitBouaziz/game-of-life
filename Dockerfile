@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-COPY target/api.war /opt/api.jar
-CMD ["java", "-jar", "/opt/api.jar", "--spring.profiles.active=devdocker"]
+COPY target/gameoflife.war /opt/gameoflife.jar
+CMD ["java", "-jar", "/opt/gameoflife.jar"]
 
 EXPOSE 9090
