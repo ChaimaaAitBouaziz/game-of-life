@@ -1,0 +1,27 @@
+version: '3.3'
+
+networks:
+  traefik-net:
+    external: true
+services:
+  web:
+    image: my.docker.registry/vendor/app:IMAGEVERSION
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.basic.port=80"
+        - "traefik.basic.protocol=http"
+        - "traefik.backend=mydomain"
+        - "traefik.frontend.rule=Host:mydomain.com"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.backend.loadbalancer.swarm=true"
+        - "traefik.frontend.headers.SSLRedirect=true"
+        - "traefik.frontend.headers.SSLHost=mydomain.com"
+        - "traefik.frontend.headers.SSLForceHost=true"
+    networks:
+      - traefik-net
