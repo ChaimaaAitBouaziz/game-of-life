@@ -5,7 +5,7 @@ networks:
     external: true
 services:
   web:
-    image: my.docker.registry/vendor/app:IMAGEVERSION
+    image: my.docker.registry/abchaimaa/gameoflife:IMAGEVERSION
     deploy:
       placement:
         constraints:
