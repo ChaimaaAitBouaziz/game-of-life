@@ -19,7 +19,6 @@ pipeline {
              archiveArtifacts artifacts: 'gameoflife-web//target/*.war', fingerprint: true
          }
      }
-     def app
 
     stage('Build image') {
         steps{
@@ -27,7 +26,7 @@ pipeline {
          * docker build on the command line */
   
         sh 'sudo chmod 777 /var/run/docker.sock'
-        app = docker.build("abchaimaa/gameoflife")
+            docker.build("abchaimaa/gameoflife")
         }
     }
 
@@ -36,7 +35,7 @@ pipeline {
         /* Ideally, we would run a test framework against our image.
          * For this example, we're using a Volkswagen-type approach ;-) */
 
-          app.inside {
+          docker.build("abchaimaa/gameoflife").inside {
               sh 'echo "Tests passed"'
           }
         } 
@@ -50,14 +49,14 @@ pipeline {
          * Pushing multiple tags is cheap, as all the layers are reused. */
           docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
             /*app.push("${env.BUILD_NUMBER}")*/
-              app.push("latest")
+              docker.build("abchaimaa/gameoflife").push("latest")
           }
         }
     }
     stage('Run image') {
         steps{
         /*sh'docker run -d -p 66:8000 abchaimaa/hellonode'*/
-          app.run('-p 55:8080') /*{ c ->
+          docker.build("abchaimaa/gameoflife").run('-p 55:8080') /*{ c ->
             sh 'echo "container is up"'
         }*/
         }    
